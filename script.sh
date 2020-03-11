@@ -11,4 +11,5 @@ do
 	done
 done
 
-matlab -nodisplay -nosplash -nodesktop -r "cd('traveling_salesman/');${string}exit;"
+matlab -nodisplay -nosplash -nodesktop -r "cd('traveling_salesman/');${string}exit;" > out/output.txt
+python transform_output.py out/output.txt out/output.csv
