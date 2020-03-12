@@ -1,5 +1,5 @@
 module load matlab/9.2.0
-cd ~/tp1-algp/src/
+cd ~/tp1-algp/
 
 string=""
 
@@ -11,5 +11,5 @@ do
 	done
 done
 
-matlab -nodisplay -nosplash -nodesktop -r "cd('traveling_salesman/');${string}exit;" > out/output.txt
+matlab -nodisplay -nosplash -nodesktop -r "cd('src/traveling_salesman/');${string}exit;" > out/output.txt
 python transform_output.py out/output.txt out/output.csv
