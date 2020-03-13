@@ -8,13 +8,13 @@ if len(sys.argv) < 3:
     sys.exit(0)
 
 # Nomes das colunas onde vamos organizar o output
-cols = ['n_nodes', 'n_reps', 'sim_an', 'monte_carlo', 'greedy', 'greedy2', 'sim_an_t', 'monte_carlo_t', 'greedy_t', 'greedy2_t']
+cols = ['n_nodes', 'n_reps', 'sim_an', 'monte_carlo', 'greedy', 'greedyK', 'sim_an_t', 'monte_carlo_t', 'greedy_t', 'greedyK_t']
 
 # Abrir o ficehiro csv para escrever
 out = open(sys.argv[2], 'w')
 # Imprimir o cabecalho do csv
 for c in cols:
-    if not c is 'greedy2_t':
+    if not c is 'greedyK_t':
         print(c + ", ", end="", file =out)
     else:
         print( c + "\n", end="", file=out)
@@ -27,7 +27,7 @@ count = 0
 multiplier = 1
 dict = {}
 for c in cols:
-    if c in ['greedy2', 'greedy', 'sim_an', 'monte_carlo']:
+    if c in ['greedyK', 'greedy', 'sim_an', 'monte_carlo']:
         dict[c] = sys.float_info.max
     else:
         dict[c] = 0
@@ -54,12 +54,12 @@ for line in f:
             count += 1
             if count is dict['n_reps']:
                 for c in cols:
-                    if not c is 'greedy2_t':
+                    if not c is 'greedyK_t':
                         string = str(dict[c]) + ', '
                     else: 
                         string = str(dict[c]) + "\n"
                     print(string, end="", file=out)
-                    if c in ['greedy2', 'greedy', 'sim_an', 'monte_carlo']:
+                    if c in ['greedyK', 'greedy', 'sim_an', 'monte_carlo']:
                         dict[c] = sys.float_info.max
                     else:
                         dict[c] = 0

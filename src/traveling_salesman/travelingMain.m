@@ -14,10 +14,22 @@ for i=1:n
 end
 clf  % clear current figure window
 
+r = randi(n);
+
+% Run greedy2 algorithm
+for p=1:procs
+    tic
+    [Tdist4(p),route4]=travelingGreedyK(D, r, 5);
+    [Times4(p)] = toc;
+    %subplot(3,procs,p);
+    %plot([x(route3),x(route3(1))],[y(route3),y(route3(1))],'k',x(route3),y(route3),'o',x(route3(1)),y(route3(1)),'*')
+    %legend('Greedy',num2str(Tdist3(p)),'start')
+end
+
 % Run greedy algorithm
 for p=1:procs
     tic
-    [Tdist3(p),route3]=travelingGreedy(D);
+    [Tdist3(p),route3]=travelingGreedy(D, r);
     [Times3(p)] = toc;
     %subplot(3,procs,p);
     %plot([x(route3),x(route3(1))],[y(route3),y(route3(1))],'k',x(route3),y(route3),'o',x(route3(1)),y(route3(1)),'*')
@@ -48,9 +60,9 @@ end
 end
 
 
-[Tdist' Tdist2' Tdist3']
+[Tdist' Tdist2' Tdist3' Tdist4']
 disp("tempos")
-[Times' Times2' Times3']
+[Times' Times2' Times3' Times4']
 
 
 

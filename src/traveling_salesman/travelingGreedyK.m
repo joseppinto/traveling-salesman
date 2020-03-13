@@ -1,4 +1,4 @@
-function [Tdist,town]=greedy2(D)
+function [Tdist,town]=greedyK(D, r, K)
 
 % A simple "greedy" algorithm for the Traveling Salesman Problem. Given  
 % n points by its (x,y) coordinates, D(i,j) holds the distance between the 
@@ -9,25 +9,18 @@ function [Tdist,town]=greedy2(D)
 % not yet visited, is always choosen.
 
 n=length(D);
-min_start = 0;
-min_sum = intmin;
-for i=1:n-1        % ith node
-     if sum(D(i,1)) > min_sum
-          min_start = i;
-          min_sum = sum(D(i,1));
-     end
-end
-town(1)=min_start;  % starting point
-to_visit=setdiff(1:n,town(1)); 
+town(1)=r;  % starting point
+to_visit= 1:n;
 Tdist=0;
-for i=1:n-1        % ith journey
-     [dist, pos]=min(D(town(i),to_visit));
-     town(i+1)=to_visit(pos);
-     Tdist=Tdist+dist;
-     to_visit=setdiff(to_visit,town(i+1));
+poss = [town(1)];
+i = 1;
+while i < n        
+     to_visit = setdiff(to_visit,to_visit(poss));
+     [~, poss]=mink(D(town(i),to_visit), K);
+     town = [town to_visit(poss)];
+     i = i + length(poss);
+end
+for i=1:n-1
+     Tdist = Tdist + D(town(i), town(i+1));
 end
 Tdist=Tdist+D(town(1),town(n));
-
-
-
-

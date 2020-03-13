@@ -22,7 +22,7 @@ for i, row in data.iterrows():
     dict['version'].append('sim_an')
     dict['version'].append('monte_carlo')
     dict['version'].append('greedy')
-    dict['version'].append('greedy2')
+    dict['version'].append('greedyK')
     dict['perimeter'].append(row[2])
     dict['perimeter'].append(row[3])
     dict['perimeter'].append(row[4])

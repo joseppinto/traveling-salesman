@@ -3,7 +3,7 @@ cd ~/tp1-algp/
 
 string=""
 
-for n_nodes in 4 8 16 32 64 128 256 512 
+for n_nodes in 4 8 16 32 64 128 256 512 1024 2000
 do
 	for n_procs in 1 2 4 #8 16
 	do
