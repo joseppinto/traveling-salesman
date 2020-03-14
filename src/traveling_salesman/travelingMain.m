@@ -19,7 +19,7 @@ r = randi(n);
 % Run greedy2 algorithm
 for p=1:procs
     tic
-    [Tdist4(p),route4]=travelingGreedyK(D, r, 5);
+    [Tdist4(p),route4]=travelingGreedyK(D, r, n/20 + 10);
     [Times4(p)] = toc;
     %subplot(3,procs,p);
     %plot([x(route3),x(route3(1))],[y(route3),y(route3(1))],'k',x(route3),y(route3),'o',x(route3(1)),y(route3(1)),'*')
