@@ -3,11 +3,17 @@ cd ~/tp1-algp/
 
 string=""
 
-for n_nodes in 4 8 16 32 64 128 256 512 1024 2000
+for n_nodes in 4 8 16 32 64 128 256 512 1024 2048 4096 8192 
 do
-	for n_procs in 1 2 4 #8 16
+	for n_procs in 8
 	do
-		string="${string}disp('${n_nodes}, ${n_procs}');travelingMain(${n_nodes}, ${n_procs});"	
+		for area in 10 100 1000
+		do
+			for circle in true false
+			do
+				string="${string}disp('${n_nodes}, ${n_procs}, ${area}, ${circle}');travelingMain(${n_nodes}, ${n_procs}, ${area}, ${circle});"	
+			done
+		done
 	done
 done
 

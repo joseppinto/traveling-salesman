@@ -1,11 +1,28 @@
-function travelingMain(n,procs)
+function travelingMain(n,procs, area, circle)
 
-% This is a simulation of a parallel execution on p processors of the codes
-% traveling, travelingSA and travelingGreedy
-% The parallel solution is thus the answer with smaller cost.
-
-% generates the position of each town in a square of side 10...
-x=10*rand(1,n); y=10*rand(1,n); 
+    % This is a simulation of a parallel execution on p processors of the codes
+    % traveling, travelingSA and travelingGreedy
+    % The parallel solution is thus the answer with smaller cost.
+    
+    % generates the position of each town in a square of side 10...
+    if circle
+        radius = sqrt(area/pi);
+        x = [];
+        y = [];
+        for i=1:n
+            xx = radius;
+            yy = radius;
+            while xx^2 + yy^2 > radius^2
+                xx = rand()*radius;
+                yy = rand()*radius;
+            end
+            x(end + 1) = xx;
+            y(end + 1) = yy;
+        end
+    else
+        x=sqrt(area)*rand(1,n); 
+        y=sqrt(area)*rand(1,n); 
+    end
 % ... and computes the distances between them 
 for i=1:n
     for j=1:n
@@ -19,7 +36,7 @@ r = randi(n);
 % Run greedy2 algorithm
 for p=1:procs
     tic
-    [Tdist4(p),route4]=travelingGreedyK(D, r, n/20 + 10);
+    [Tdist4(p),route4]=travelingGreedyK(D, r, fix(n/30) + 10);
     [Times4(p)] = toc;
     %subplot(3,procs,p);
     %plot([x(route3),x(route3(1))],[y(route3),y(route3(1))],'k',x(route3),y(route3),'o',x(route3(1)),y(route3(1)),'*')

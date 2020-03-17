@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
     sys.exit(0)
 
 data = pd.read_csv(sys.argv[1])
-dict = {'n_nodes': [], 'n_reps': [], 'version': [], 'perimeter': [], 'time': []}
+dict = {'n_nodes': [], 'n_reps': [], 'version': [], 'perimeter': [], 'time': [], 'area':[], 'shape': []}
 
 for i, row in data.iterrows():
     dict['n_nodes'].append(row[0])
@@ -31,11 +31,24 @@ for i, row in data.iterrows():
     dict['time'].append(row[7])
     dict['time'].append(row[8])
     dict['time'].append(row[9])
+    dict['area'].append(row[10])
+    dict['area'].append(row[10])
+    dict['area'].append(row[10])
+    dict['area'].append(row[10])
+    if row[11] == 'True':
+        shape = 'circle' 
+    else:
+        shape = 'square'
+    dict['shape'].append(shape)
+    dict['shape'].append(shape)
+    dict['shape'].append(shape)
+    dict['shape'].append(shape)
+    
 
 data = pd.DataFrame(dict)
 
-plot = sns.relplot(x="n_nodes", y="perimeter", data=data, hue="version", col="n_reps", kind="line")
+plot = sns.relplot(x="n_nodes", y="perimeter", data=data, hue="version", col="shape", kind="line")
 plt.show()
 
-plot = sns.relplot(x="n_nodes", y="time", data=data, hue="version", col="n_reps", kind="line")
+plot = sns.relplot(x="n_nodes", y="time", data=data, hue="version", kind="line")
 plt.show()

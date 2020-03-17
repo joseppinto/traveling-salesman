@@ -8,7 +8,7 @@ if len(sys.argv) < 3:
     sys.exit(0)
 
 # Nomes das colunas onde vamos organizar o output
-cols = ['n_nodes', 'n_reps', 'sim_an', 'monte_carlo', 'greedy', 'greedyK', 'sim_an_t', 'monte_carlo_t', 'greedy_t', 'greedyK_t']
+cols = ['n_nodes', 'n_reps', 'sim_an', 'monte_carlo', 'greedy', 'greedyK', 'sim_an_t', 'monte_carlo_t', 'greedy_t', 'greedyK_t', 'area', 'circle']
 
 # Abrir o ficehiro csv para escrever
 out = open(sys.argv[2], 'w')
@@ -34,10 +34,12 @@ for c in cols:
 for line in f:
     if re.match('tempos' , line):
         time_flag = True 
-    elif re.match( '[0-9]+, [0-9]+\n', line):
+    elif re.match( '[0-9]+, [0-9]+, [0-9]+, (true|false)\n', line):
         # Inicio de uma nova execucao da main do matlab
         dict['n_nodes'] = int(line.split(', ')[0])
         dict['n_reps'] = int(line.split(', ')[1])
+        dict['area'] = int(line.split(', ')[2])
+        dict['circle'] = (line.split(', ')[3] == 'true')
         count = 0
         multiplier = 1.0
     elif re.match( '\s+1\.0e\+\d+\s+\*', line):
@@ -47,14 +49,14 @@ for line in f:
         if time_flag:
             # Extrair os tempos da linha e multiplicar pelo multiplicador
             l = [multiplier * float(a) for a in line.split()]
-            dict[cols[6]] += l[0]
-            dict[cols[7]] += l[1]
-            dict[cols[8]] += l[2]
-            dict[cols[9]] += l[3]
+            dict[cols[6]] += l[0]/dict['n_reps']
+            dict[cols[7]] += l[1]/dict['n_reps']
+            dict[cols[8]] += l[2]/dict['n_reps']
+            dict[cols[9]] += l[3]/dict['n_reps']
             count += 1
             if count is dict['n_reps']:
                 for c in cols:
-                    if not c is 'greedyK_t':
+                    if not c is 'circle':
                         string = str(dict[c]) + ', '
                     else: 
                         string = str(dict[c]) + "\n"
