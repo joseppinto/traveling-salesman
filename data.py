@@ -35,7 +35,7 @@ for i, row in data.iterrows():
     dict['area'].append(row[10])
     dict['area'].append(row[10])
     dict['area'].append(row[10])
-    if row[11] == 'True':
+    if row[11][1:] == 'True':
         shape = 'circle' 
     else:
         shape = 'square'
@@ -46,9 +46,14 @@ for i, row in data.iterrows():
     
 
 data = pd.DataFrame(dict)
+data.to_csv("tests.csv")
+data2 = data
 
-plot = sns.relplot(x="n_nodes", y="perimeter", data=data, hue="version", col="shape", kind="line")
+
+plot = sns.relplot(x="area", y="perimeter", data=data2,hue="version", kind="line", col="shape")
+plot.set(xscale="log", yscale="log")
 plt.show()
 
-plot = sns.relplot(x="n_nodes", y="time", data=data, hue="version", kind="line")
+plot = sns.relplot(x="n_nodes", y="time", data=data2, hue="version", kind="line")
+plot.set(xscale="log", yscale="log")
 plt.show()

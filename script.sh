@@ -1,11 +1,11 @@
 module load matlab/9.2.0
-cd ~/tp1-algp/
+cd ~/traveling-salesman/
 
 string=""
 
 for n_nodes in 4 8 16 32 64 128 256 512 1024 2048 4096 8192 
 do
-	for n_procs in 8
+	for n_procs in 16
 	do
 		for area in 10 100 1000
 		do

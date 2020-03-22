@@ -14,7 +14,7 @@ cols = ['n_nodes', 'n_reps', 'sim_an', 'monte_carlo', 'greedy', 'greedyK', 'sim_
 out = open(sys.argv[2], 'w')
 # Imprimir o cabecalho do csv
 for c in cols:
-    if not c is 'greedyK_t':
+    if not c is 'circle':
         print(c + ", ", end="", file =out)
     else:
         print( c + "\n", end="", file=out)
@@ -27,7 +27,7 @@ count = 0
 multiplier = 1
 dict = {}
 for c in cols:
-    if c in ['greedyK', 'greedy', 'sim_an', 'monte_carlo']:
+    if c in ['greedyK', 'greedy', 'sim_an', 'monte_carlo', 'sim_an_t', 'monte_carlo_t', 'greedy_t', 'greedyK_t']:
         dict[c] = sys.float_info.max
     else:
         dict[c] = 0
@@ -39,7 +39,7 @@ for line in f:
         dict['n_nodes'] = int(line.split(', ')[0])
         dict['n_reps'] = int(line.split(', ')[1])
         dict['area'] = int(line.split(', ')[2])
-        dict['circle'] = (line.split(', ')[3] == 'true')
+        dict['circle'] = ('true' in line.split(', ')[3])
         count = 0
         multiplier = 1.0
     elif re.match( '\s+1\.0e\+\d+\s+\*', line):
@@ -49,10 +49,10 @@ for line in f:
         if time_flag:
             # Extrair os tempos da linha e multiplicar pelo multiplicador
             l = [multiplier * float(a) for a in line.split()]
-            dict[cols[6]] += l[0]/dict['n_reps']
-            dict[cols[7]] += l[1]/dict['n_reps']
-            dict[cols[8]] += l[2]/dict['n_reps']
-            dict[cols[9]] += l[3]/dict['n_reps']
+            dict[cols[6]] = l[0]/dict['n_reps']
+            dict[cols[7]] = l[1]/dict['n_reps']
+            dict[cols[8]] = l[2]/dict['n_reps']
+            dict[cols[9]] = l[3]/dict['n_reps']
             count += 1
             if count is dict['n_reps']:
                 for c in cols:
@@ -61,7 +61,7 @@ for line in f:
                     else: 
                         string = str(dict[c]) + "\n"
                     print(string, end="", file=out)
-                    if c in ['greedyK', 'greedy', 'sim_an', 'monte_carlo']:
+                    if c in ['greedyK', 'greedy', 'sim_an', 'monte_carlo', 'sim_an_t', 'monte_carlo_t', 'greedy_t', 'greedyK_t']:
                         dict[c] = sys.float_info.max
                     else:
                         dict[c] = 0
@@ -71,10 +71,10 @@ for line in f:
         else:
             # Extrair os resultados da linha e multiplicar pelo multiplicador
             l = [multiplier * float(a) for a in line.split()]
-            dict[cols[2]] = min(l[0], dict[cols[2]])
-            dict[cols[3]] = min(l[1], dict[cols[3]])
-            dict[cols[4]] = min(l[2], dict[cols[4]])
-            dict[cols[5]] = min(l[3], dict[cols[5]])
+            dict[cols[2]] = l[0]/dict['n_reps']
+            dict[cols[3]] = l[1]/dict['n_reps']
+            dict[cols[4]] = l[2]/dict['n_reps']
+            dict[cols[5]] = l[3]/dict['n_reps']
             count += 1
             if count is dict['n_reps']:
                 count = 0

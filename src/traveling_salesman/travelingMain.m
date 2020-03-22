@@ -31,12 +31,12 @@ for i=1:n
 end
 clf  % clear current figure window
 
-r = randi(n);
+r = randperm(n);
 
 % Run greedy2 algorithm
 for p=1:procs
     tic
-    [Tdist4(p),route4]=travelingGreedyK(D, r, fix(n/30) + 10);
+    [Tdist4(p),route4]=travelingGreedyK(D, r(mod(p,n) + 1), fix(n/30) + 10);
     [Times4(p)] = toc;
     %subplot(3,procs,p);
     %plot([x(route3),x(route3(1))],[y(route3),y(route3(1))],'k',x(route3),y(route3),'o',x(route3(1)),y(route3(1)),'*')
@@ -46,7 +46,7 @@ end
 % Run greedy algorithm
 for p=1:procs
     tic
-    [Tdist3(p),route3]=travelingGreedy(D, r);
+    [Tdist3(p),route3]=travelingGreedy(D, r(mod(p,n) + 1));
     [Times3(p)] = toc;
     %subplot(3,procs,p);
     %plot([x(route3),x(route3(1))],[y(route3),y(route3(1))],'k',x(route3),y(route3),'o',x(route3(1)),y(route3(1)),'*')
